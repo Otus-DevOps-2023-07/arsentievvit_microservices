@@ -1,0 +1,33 @@
+---
+- name: Docker installation
+  hosts: docker
+  remote_user: ubuntu
+  become_method: sudo
+  become: true
+  tasks: 
+  - name: Update APT cache
+    ansible.builtin.apt:
+      update_cache: true
+      state: latest
+  - name: Install utils for APT transport and misc
+    ansible.builtin.apt:
+      pkg:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - software-properties-common
+  - name: Add GPG key
+    ansible.builtin.apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+
+  - name: Add Docker repo
+    ansible.builtin.apt_repository:
+      repo: deb https://download.docker.com/linux/ubuntu jammy stable
+      state: present
+    
+  - name: Update cache and install docker-ce
+    ansible.builtin.apt:
+      name: docker-ce
+      state: latest
+      update_cache: true

@@ -3,3 +3,4 @@ tf/
 variables.tf
 venv/
 terraform.tfstate*
+inventory
