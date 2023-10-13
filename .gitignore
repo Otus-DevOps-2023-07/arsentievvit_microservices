@@ -4,3 +4,9 @@ variables.tf
 venv/
 terraform.tfstate*
 inventory
+run.sh
+build_info.txt
+prometheus/
+
+## python specific
+*.pyc
