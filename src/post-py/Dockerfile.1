@@ -1,0 +1,21 @@
+FROM python:3.6-alpine
+
+# WORKDIR создаёт директорию, если её нет
+# и запускает остальные команды из неё 
+WORKDIR /app
+
+# ADD копирует файлы и может распоковывать
+# линтер рекомендует COPY
+COPY . /app
+
+# Выполняет команды, создав ещё один RO слой
+RUN apk --no-cache add build-base=0.5-r3  && \
+    # pip install --upgrade pip --no-cache-dir && \
+    pip install --no-cache-dir -r /app/requirements.txt
+
+# Переменные, которые будут доступны внутри контейнера
+# Можно менять
+ENV POST_DATABASE_HOST post_db
+ENV POST_DATABASE posts
+
+CMD ["python3", "post_app.py"]
