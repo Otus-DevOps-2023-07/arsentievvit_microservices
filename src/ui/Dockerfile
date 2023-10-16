@@ -11,7 +11,7 @@ RUN apk update && \
     bundle install --no-cache && \
     apk del build-base ruby-dev && \
     rm -rf /var/cache/apk/* && \
-    rm -rf /root/.bundle/* 
+    rm -rf /root/.bundle/*
 
 ENV POST_SERVICE_HOST post
 ENV POST_SERVICE_PORT 5000

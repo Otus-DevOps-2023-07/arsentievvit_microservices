@@ -1,7 +1,7 @@
 # arsentievvit_microservices
 arsentievvit microservices repository
 
-# ДЗ 13
+# ДЗ 14
 
 ## Основная часть
 
@@ -20,7 +20,7 @@ arsentievvit microservices repository
  - Создан volume **reddit_db**, который монтируется при запуске из образа **mongodb**. После удаления контейнера и пересоздании, данные остаются и приложение работает нормально.
 
 
-# ДЗ 12
+# ДЗ 13
 
 # Основная часть
 
@@ -41,7 +41,7 @@ TF_VAR_instance_count=2 terraform apply
 ```bash
 # Сделал со статическим инвентарём
 ansible-playbook docker_install.yml # Подготовка докер хоста
-ansible-playbook docker_image.yml   # Развёртывание контейнера 
+ansible-playbook docker_image.yml   # Развёртывание контейнера
 ```
 
 Создан файл создания образа через packer:

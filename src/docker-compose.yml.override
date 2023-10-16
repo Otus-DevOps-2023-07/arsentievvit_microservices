@@ -46,4 +46,3 @@ volumes:
 networks:
   reddit_front:
   reddit_back:
-
