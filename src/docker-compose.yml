@@ -1,0 +1,48 @@
+version: '3.3'
+services:
+  db:
+    image: mongo:4
+    volumes:
+      - db:/data/db
+    networks:
+      reddit_back:
+        aliases:
+          - post_db
+          - comment_db
+  ui:
+    build: ./ui
+    image: ${DCUSERNAME}/ui:1.0
+    ports:
+      - ${SERVICEPORT}:9292/tcp
+    networks:
+      reddit_front:
+        aliases:
+          - ${UI_NAME}
+
+  post:
+    build: ./post-py
+    image: ${DCUSERNAME}/post:1.0
+    networks:
+      reddit_front:
+        aliases:
+          - ${POST_NAME}
+      reddit_back:
+        aliases:
+          - ${POST_NAME}
+  comment:
+    build: ./comment
+    image: ${DCUSERNAME}/comment:1.0
+    networks:
+      reddit_front:
+        aliases:
+          - ${COMMENT_NAME}
+      reddit_back:
+        aliases:
+          - ${COMMENT_NAME}
+
+volumes:
+  db:
+
+networks:
+  reddit_front:
+  reddit_back:

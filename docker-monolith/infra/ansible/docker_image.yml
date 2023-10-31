@@ -7,12 +7,12 @@
   vars:
     container_image: "varsentiev/otus-reddit:1.0"
 
-  tasks: 
+  tasks:
   - name: Pull image
     community.docker.docker_image:
       name: "{{ container_image }}"
       source: pull
-  
+
   - name: Create container
     community.docker.docker_container:
       image: "{{ container_image }}"
