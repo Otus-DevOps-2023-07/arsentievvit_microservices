@@ -54,5 +54,5 @@ production:
   script:
     - echo "Deploy"
   environment:
-    name: beta
+    name: production
     url: http://example.com
