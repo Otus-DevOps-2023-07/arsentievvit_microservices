@@ -5,8 +5,6 @@ venv/
 terraform.tfstate*
 inventory
 run.sh
-build_info.txt
-prometheus/
 .env
 ## python specific
 *.pyc
