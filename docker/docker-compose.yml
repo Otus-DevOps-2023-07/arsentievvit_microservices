@@ -1,0 +1,86 @@
+version: '3.3'
+services:
+  node-exporter:
+    image: prom/node-exporter:v0.15.2
+    user: root
+    networks:
+      reddit_back:
+        aliases:
+          - node-exporter
+      reddit_front:
+        aliases:
+          - node-exporter
+
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
+
+  db:
+    image: mongo:${MONGODB_VER}
+    volumes:
+      - db:/data/db
+    networks:
+      reddit_back:
+        aliases:
+          - post_db
+          - comment_db
+  ui:
+    image: ${USERNAME}/ui
+    ports:
+      - ${SERVICEPORT}:9292/tcp
+    networks:
+      reddit_front:
+        aliases:
+          - ${UI_NAME}
+
+  post:
+    image: ${USERNAME}/post
+    networks:
+      reddit_front:
+        aliases:
+          - ${POST_NAME}
+      reddit_back:
+        aliases:
+          - ${POST_NAME}
+  comment:
+    image: ${USERNAME}/comment
+    networks:
+      reddit_front:
+        aliases:
+          - ${COMMENT_NAME}
+      reddit_back:
+        aliases:
+          - ${COMMENT_NAME}
+
+  prometheus:
+    image: ${USERNAME}/prometheus
+    networks:
+      reddit_front:
+        aliases:
+          - ${PROMETHEUS_NAME}
+      reddit_back:
+        aliases:
+          - ${PROMETHEUS_NAME}
+    ports:
+      - '9090:9090'
+    volumes:
+      - prometheus_data:/prometheus
+    command: # Передаем доп параметры в командной строке
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention=1d' # Задаем время хранения метрик в 1 день
+
+
+volumes:
+  db:
+  prometheus_data:
+
+networks:
+  reddit_front:
+  reddit_back:
+
