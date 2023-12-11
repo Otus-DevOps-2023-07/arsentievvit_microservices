@@ -1,7 +1,7 @@
 # arsentievvit_microservices
 arsentievvit microservices repository
 
-# ДЗ 16
+# ДЗ 17
 
 ## Основная часть
 
@@ -12,6 +12,17 @@ arsentievvit microservices repository
 - добавил node exporter в docker-compose.yml, перезапустил, проверил метрики
 
 Репозиторий docker hub - https://hub.docker.com/repositories/varsentiev
+
+# ДЗ 16
+
+## Основная часть
+
+- выполнена установка gitlab-ci на инстанс
+- проведена начальная настройка
+- создана группа и проект внутри неё
+- настроен раннер
+- в файле **.gitlab-ci.yml** описан пайплайн
+- протестировано создание окружений, в том числе динамическое
 
 # ДЗ 15
 
