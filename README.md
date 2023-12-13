@@ -1,6 +1,18 @@
 # arsentievvit_microservices
 arsentievvit microservices repository
 
+# ДЗ 17
+
+## Основная часть
+
+- установил Prometheus в docker
+- сконфигурировал таргеты сбора метрик в конфигурационном файле
+- обновил docker-compose.yml для поднятия контейнеров приложения и prometheus
+- проверил метрики при выключении части контейнеров приложения
+- добавил node exporter в docker-compose.yml, перезапустил, проверил метрики
+
+Репозиторий docker hub - https://hub.docker.com/repositories/varsentiev
+
 # ДЗ 16
 
 ## Основная часть
