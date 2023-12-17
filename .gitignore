@@ -6,6 +6,5 @@ terraform.tfstate*
 inventory
 run.sh
 .env
-build_info.txt
 ## python specific
 *.pyc
