@@ -1,17 +1,14 @@
-FROM alpine:3.9
+FROM ruby:2.2
+RUN echo "deb http://archive.debian.org/debian stretch main" > /etc/apt/sources.list && \
+    apt-get update -qq && apt-get install -y build-essential
 
 ENV APP_HOME /app
+RUN mkdir $APP_HOME
 
 WORKDIR $APP_HOME
-
-COPY . ./
-
-RUN apk update && \
-    apk --no-cache add ruby-bundler ruby-dev build-base ruby-json && \
-    bundle install --no-cache && \
-    apk del build-base ruby-dev && \
-    rm -rf /var/cache/apk/* && \
-    rm -rf /root/.bundle/*
+ADD Gemfile* $APP_HOME/
+RUN bundle install
+ADD . $APP_HOME
 
 ENV POST_SERVICE_HOST post
 ENV POST_SERVICE_PORT 5000
@@ -19,3 +16,4 @@ ENV COMMENT_SERVICE_HOST comment
 ENV COMMENT_SERVICE_PORT 9292
 
 CMD ["puma"]
+

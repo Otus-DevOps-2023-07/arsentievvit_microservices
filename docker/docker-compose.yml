@@ -30,7 +30,14 @@ services:
           - post_db
           - comment_db
   ui:
-    image: ${USERNAME}/ui
+    image: ${USERNAME}/ui:${VERSION}
+    environment:
+      - ZIPKIN_ENABLED=%{ZIPKIN_ENABLED}
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: service.ui
     ports:
       - ${SERVICEPORT}:9292/tcp
     networks:
@@ -39,7 +46,15 @@ services:
           - ${UI_NAME}
 
   post:
-    image: ${USERNAME}/post
+    image: ${USERNAME}/post:${VERSION}
+    environment:
+      - ZIPKIN_ENABLED=%{ZIPKIN_ENABLED}
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: service.post
+
     networks:
       reddit_front:
         aliases:
@@ -48,7 +63,9 @@ services:
         aliases:
           - ${POST_NAME}
   comment:
-    image: ${USERNAME}/comment
+    image: ${USERNAME}/comment:${VERSION}
+    environment:
+      - ZIPKIN_ENABLED=%{ZIPKIN_ENABLED}
     networks:
       reddit_front:
         aliases:
@@ -58,7 +75,7 @@ services:
           - ${COMMENT_NAME}
 
   prometheus:
-    image: ${USERNAME}/prometheus
+    image: ${USERNAME}/prometheus:latest
     networks:
       reddit_front:
         aliases:
@@ -75,7 +92,6 @@ services:
       - '--storage.tsdb.path=/prometheus'
       - '--storage.tsdb.retention=1d' # Задаем время хранения метрик в 1 день
 
-
 volumes:
   db:
   prometheus_data:
@@ -83,4 +99,3 @@ volumes:
 networks:
   reddit_front:
   reddit_back:
-

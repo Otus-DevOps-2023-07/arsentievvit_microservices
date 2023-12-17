@@ -4,9 +4,9 @@ WORKDIR /app
 
 COPY . /app
 
-RUN apk --no-cache add build-base=0.5-r3 gcc musl-dev  && \
+RUN apk --no-cache add build-base=0.5-r3  && \
     pip install --no-cache-dir -r /app/requirements.txt && \
-    apk del build-base 
+    apk del build-base
 
 ENV POST_DATABASE_HOST post_db
 ENV POST_DATABASE posts
